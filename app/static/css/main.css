@@ -1,0 +1,9 @@
+body {
+    background: #D4DDE2;
+}
+
+#videoElement {
+      width: 350px;
+      height: 250px;
+      background-color: #666;
+}

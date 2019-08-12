@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mt-2 mb-5">
+        <div class="col-10"></div>
+        <div class="col-2">
+            <img src="static/img/logo.png" alt="logo" class="img-fluid">
+        </div>
+    </div>
+    <div class="row mt-5">
+        {% if fingerprint %}
+        <div class="col-6 text-center">
+            <img src="{{fingerprint.link}}" alt="profile" class="img-fluid">
+        </div>
+        {% else %}
+        <div class="col-6 text-center">
+            <img src="static/img/fingerprint.png" alt="fingerprint" class="img-fluid">
+        </div>
+        {% endif %}
+        <div class="col-6 text-center">
+            <p class="display-4 text-center font-weigth-bold ">Welcome</p>
+            {% if fingerprint %}
+            <p class="display-6 text-center font-weigth-bold ">{{fingerprint.name}}</p>
+            {% else %}
+            <p class="display-6 text-center font-weigth-bold ">Please position your fingerprint for scanning</p>
+            {% endif %}
+        </div>
+    </div>
+    {% if fingerprint %}
+    <div class="row mt-3">
+        <div class="col-12 text-center">
+            <p class="display-5 text-center font-weigth-bold text-primary">Please enter</p>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

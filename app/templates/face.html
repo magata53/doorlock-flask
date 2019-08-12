@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block scripts %}
+<script src="{{url_for('.static', filename='js/face.js')}}"></script>
+{{super()}}
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mt-2 mb-5">
+        <div class="col-10"></div>
+        <div class="col-2">
+            <img src="static/img/logo.png" alt="logo" class="img-fluid">
+        </div>
+    </div>
+    <div class="row mt-5">
+        {% if face %}
+        <div class="col-6 text-center">
+            <img src="{{face.link}}" alt="profile" class="img-fluid">
+        </div>
+        {% else %}
+        <div class="col-6 text-center">
+            <video autoplay="true" id="videoElement"></video>
+        </div>
+        {% endif %}
+        <div class="col-6 text-center">
+            <p class="display-4 text-center font-weigth-bold ">Welcome</p>
+            {% if face %}
+            <p class="display-6 text-center font-weigth-bold ">{{face.name}}</p>
+            {% else %}
+            <p class="display-6 text-center font-weigth-bold ">Please position your face for scanning</p>
+            {% endif %}
+        </div>
+    </div>
+    {% if face %}
+    <div class="row mt-3">
+        <div class="col-12 text-center">
+            <p class="display-5 text-center font-weigth-bold text-primary">Please enter</p>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
