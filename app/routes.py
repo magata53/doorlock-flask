@@ -39,13 +39,13 @@ def fingerprint_post():
         name = data['name']
         response = {'name': name, 'link': link}
         global data_finger
-        data_finger = jsonify(response)
+        data_finger = json.dumps(response)
         return data_finger
 
 
 @app.route('/fingerprint')
 def fingerprint():
-    fingerprint = data_finger
+    fingerprint = json.loads(data_finger)
     return render_template('fingerprint.html', fingerprint=fingerprint)
 
 
