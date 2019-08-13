@@ -59,12 +59,12 @@ def access_denied_post():
     data_access = json.dumps(response)
     return data_access
 
-
+#
 @app.route('/access_denied')
 def access_denied():
     denied = json.loads(data_access)
-    if denied.type == 'face' and denied.error == 'no data':
-        change = True
-    else:
+    if 'face' in denied:
         change = False
+    else:
+        change = True
     return render_template('access_denied.html', change=change)
