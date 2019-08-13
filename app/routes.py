@@ -64,7 +64,7 @@ def access_denied_post():
 def access_denied():
     denied = json.loads(data_access)
     if 'face' in denied:
-        change = False
-    else:
         change = True
+    else:
+        change = False
     return render_template('access_denied.html', change=change)
