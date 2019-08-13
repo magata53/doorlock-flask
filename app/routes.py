@@ -21,13 +21,13 @@ def face_post():
         name = data['name']
         response = {'name': name, 'link': link}
         global data_face
-        data_face = response
+        data_face = json.dumps(response)
         return data_face
 
 
 @app.route('/face')
 def face():
-    face = data_face
+    face = json.loads(data_face)
     return render_template('face.html', face=face)
 
 
@@ -56,12 +56,13 @@ def access_denied_post():
     error = data['error']
     response = {'type': type, 'error':error}
     global data_access
-    data_access = response
+    data_access = json.dumps(response)
     return data_access
 
 @app.route('/access_denied')
 def access_denied():
-    if data_access.type == "face" and data_access.error == "no data":
+    denied = json.loads(data_access)
+    if denied.type == "face" and denied.error == "no data":
         change = True
     else:
         change = False
