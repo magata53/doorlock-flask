@@ -1,3 +1,4 @@
+werkzeug
 flask
 flask-bootstrap4
 paho-mqtt

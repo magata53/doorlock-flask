@@ -1,37 +1,68 @@
-from flask import render_template, redirect
+from flask import render_template, request, jsonify, session, redirect, url_for
+import json
 from app import app
 # from app.search import Name
+
+data_finger = None
+data_face = None
+data_access =None
 
 
 @app.route('/')
 def index():
-
     return render_template('index.html')
+
+
+@app.route('/api/post/face', methods=['POST'])
+def face_post():
+    if request.method == 'POST':
+        data = request.json
+        link = data['link']
+        name = data['name']
+        response = {'name': name, 'link': link}
+        global data_face
+        data_face = response
+        return data_face
 
 
 @app.route('/face')
 def face():
-    dataFace = {
-        'link': 'https://i.ytimg.com/vi/GAnQGc-Ce_o/hqdefault.jpg',
-        'name': 'Faza Ghassani'
-    }
+    face = data_face
+    return render_template('face.html', face=face)
 
-    return render_template('face.html', face=dataFace)
+
+@app.route('/api/post/fingerprint', methods=['POST'])
+def fingerprint_post():
+    if request.method == 'POST':
+        data = request.json
+        link = data['link']
+        name = data['name']
+        response = {'name': name, 'link': link}
+        global data_finger
+        data_finger = response
+        return data_finger
 
 
 @app.route('/fingerprint')
 def fingerprint():
-    # if Name:
-    #     dataFinger = {
-    #         'link': 'https://i.ytimg.com/vi/GAnQGc-Ce_o/hqdefault.jpg',
-    #         'name': Name
-    #     }
-    # else:
-    #     return redirect('access_denied.html', change=False)
-    dataFinger = {}
-    return render_template('fingerprint.html', fingerprint=dataFinger)
+    fingerprint = data_finger
+    return render_template('fingerprint.html', fingerprint=fingerprint)
 
+
+@app.route('/api/post/access_denied', methods=['POST'])
+def access_denied_post():
+    data = request.json
+    type = data['type']
+    error = data['error']
+    response = {'type': type, 'error':error}
+    global data_access
+    data_access = response
+    return data_access
 
 @app.route('/access_denied')
 def access_denied():
-    return render_template('access_denied.html')
+    if data_access.type == "face" and data_access.error == "no data":
+        change = True
+    else:
+        change = False
+    return render_template('access_denied.html', change=change)
