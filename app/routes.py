@@ -39,7 +39,7 @@ def fingerprint_post():
         name = data['name']
         response = {'name': name, 'link': link}
         global data_finger
-        data_finger = response
+        data_finger = jsonify(response)
         return data_finger
 
 
